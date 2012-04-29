@@ -10,17 +10,14 @@ var tryRiak = (function () {
             if (data.response !== undefined) {
                 try {
                     var body = $.parseJSON(data.response);
-                    var output = '';
-                    for (prop in body) {
-                        output += prop + ': ' + body[prop]+', <br/>';
-                    }
+                    output = '<pre>'+JSON.stringify(body, null, 4)+'</pre>';
                 } catch(e) {
-                    output = data.response;
+                    output = data.response.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 }
 
-                that.append(output + '<div class="header">'+data.header.replace(/\r/g,'<br>')+'</div>');
+                that.append('<div class="resbody">' + output + '</div><div class="header">'+data.header.replace(/\r/g,'<br>')+'</div>');
             } else if (data.error !== undefined) {
-                that.append(data.error, "error", "", true);
+                that.append('<div class="error">' + data.error + '</div>');
             } else {
                 that.append("Invalid response from TRY-RIAK server.", "error");
             }
@@ -30,14 +27,14 @@ var tryRiak = (function () {
     tr.next = function () {
         var that = this;
         $.get('/next', null, function(data) {
-           $('#tutorial').append(data);
+           $('#tutorial').append('<div class="step">'+data+'</step>');
            that.scrollDown();
         });
     }
     tr.prev = function () {
         var that = this;
         $.get('/prev', null, function(data) {
-           $('#tutorial').append(data);
+           $('#tutorial').append('<div class="step">'+data+'</step>');
            that.scrollDown();
         });
     }
@@ -52,11 +49,12 @@ $(document).ready(function () {
   $("#terminal").focus();
   $("#run").click(function (event) {
       var url = $("#url").val();
-      var method = $("#method").val();
+      var method = $("input[name=method]:checked").val() || 'GET';
       var header = $("#header").val();
       var data = $("#data").val();
 
       tryRiak.submitCommand(url, header, data, method);
+      return(false);
   });
   $("#next").click(function (event) {
       tryRiak.next();

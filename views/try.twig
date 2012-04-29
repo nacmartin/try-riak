@@ -2,7 +2,8 @@
 <html lang="es">
   <head>
     {% block head %}
-      <link rel="stylesheet" href="/public/css/main.css" />
+      <link rel="stylesheet" href="/public/css/main.css">
+      <link rel="stylesheet" href="/public/css/bootstrap.min.css">
       <title>Try Riak</title>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -11,28 +12,61 @@
     {% endblock %}
   </head>
   <body>
-    <div id="tutorial">
-      {{tutorial|raw}}
+    <div class="container">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="./">Try Riak</a>
+          </div>
+        </div>
+      </div>
+      <div id="tutorial">
+        <div class="step">{{tutorial|raw}}</div>
+      </div>
+      <button class="btn" id="next">NEXT</button>
+      <button class="btn" id="prev">PREVIOUS</button>
+      <form class="well form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="url">url</label>
+            <div class="controls">
+              <input id="url">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">method</label>
+            <div class="controls">
+              <input type="radio" name="method" value="GET" id="method1">
+              GET
+            </div>
+            <div class="controls">
+              <input type="radio" name="method" value="POST" id="method1">
+              POST
+            </div>
+            <div class="controls">
+              <input type="radio" name="method" value="PUT" id="method1">
+              PUT
+            </div>
+            <div class="controls">
+              <input type="radio" name="method" value="DELETE" id="method1">
+              DELETE
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="header">header</label>
+            <div class="controls">
+              <input id="header">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="data">data</label>
+            <div class="controls">
+              <input id="data">
+            </div>
+          </div>
+        </fieldset>
+        <button class="btn" id="run">RUN</button>
+      </form>
     </div>
-    <button id="next">NEXT</button>
-    <button id="prev">PREVIOUS</button>
-    <div>
-      url
-      <input id="url">
-    </div>
-    <div>
-      method
-      <input id="method">
-    </div>
-    <div>
-      header
-      <input id="header">
-    </div>
-    <div>
-      data
-      <input id="data">
-    </div>
-    <div>
-    <button id="run">RUN</button>
   </body>
 </head>

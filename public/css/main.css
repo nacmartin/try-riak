@@ -1,4 +1,29 @@
 #tutorial {
-    height: 500px;
+    margin-top: 80px;
+    height: 300px;
     overflow: auto;
+}
+
+.resbody {
+    background-color: #ddd;
+    padding: 10px;
+    margin: 10px;
+}
+.header {
+    background-color: #ddd;
+    padding: 10px;
+    margin: 10px;
+}
+
+.step {
+    background-color: #eee;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.error {
+    background-color: #c00;
+    color: #fff;
+    padding: 10px;
+    margin: 20px 0;
 }
