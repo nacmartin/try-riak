@@ -1,0 +1,82 @@
+{
+    "hash": "e99a388a0e25e44602a4fce3102d186f",
+    "packages": [
+        {
+            "package": "pimple/pimple",
+            "version": "dev-master",
+            "source-reference": "2c7b104e6a5ca9207bd713892979882f1d310abc"
+        },
+        {
+            "package": "silex/silex",
+            "version": "dev-master",
+            "source-reference": "25abd1a8e9042143716232b8c7f6e545545c830b"
+        },
+        {
+            "package": "symfony/browser-kit",
+            "version": "dev-master",
+            "source-reference": "f03173e232da5d84eb799cad5d57354e6541b0f8",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/class-loader",
+            "version": "dev-master",
+            "source-reference": "839c92ad39ddb79a5ed66a3736342b93fad5736a",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/css-selector",
+            "version": "dev-master",
+            "source-reference": "5bfbf492a148da922c2765ea8366effdb738d1a1",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/dom-crawler",
+            "version": "dev-master",
+            "source-reference": "01647b1f62dbf6e8454d6cad3194ff731a3ac34b",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "source-reference": "0727434cb62f46a845abe4038ea5f6794bf3e443",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/finder",
+            "version": "dev-master",
+            "source-reference": "78b2e33951821b6d423718f57788f1894dcb935a",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/http-foundation",
+            "version": "dev-master",
+            "source-reference": "23a519a140fefa5079fefd8a11f29386aeab1893",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/http-kernel",
+            "version": "dev-master",
+            "source-reference": "7074a4788df2f2d5e93da88302c89cfab50c82bf",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/process",
+            "version": "dev-master",
+            "source-reference": "718655f4bc664d693b33f3e6e8a895e454208021",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/routing",
+            "version": "dev-master",
+            "source-reference": "4759fc206c92c0434791223d73d6cd6491a17ee5",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "f3491b5cbfd03a31538b6e8c82d65cd54996e870"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": []
+}
