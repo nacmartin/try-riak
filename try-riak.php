@@ -15,6 +15,26 @@ $app['port'] = 8091;
 $app['host'] = 'http://127.0.0.1';
 $app['tutorial_dir'] = __DIR__.'/tutorial/';
 
+function renderStep($step, $app) {
+    $app['session']->set('step', $step);
+    $content = file_get_contents($app['tutorial_dir']."step$step.md");
+    $tutorial = Markdown($content);
+    return $tutorial;
+};
+
+function addNamespace($app, $string) {
+    if (!$namespace = $app['session']->get('namespace')) {
+        $n = rand(10e16, 10e20);
+        $namespace = base_convert($n, 10, 36);
+        $app['session']->set('namespace', $namespace);
+    }
+    return preg_replace("/\/riak\/(\w)/", '/riak/'.$namespace.'$1', $string);
+}
+
+function unNamespace($app, $string) {
+    $namespace = $app['session']->get('namespace');
+    return preg_replace("/\/riak\/$namespace/", '/riak/', $string);
+}
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path'       => __DIR__.'/views',
@@ -27,37 +47,33 @@ $app->get('/', function() use($app) {
     return $app['twig']->render('try.twig', array('tutorial' => $tutorial));
 });
 
+
 $app->get('/next', function(Request $request) use($app) {
     $app['session']->start();
-    $step = $app['session']->get('step') ? : 0;
+    $step = $app['session']->get('step') ? : 1;
     $maxStep = count(glob($app['tutorial_dir']. "step*.md"));
+
     if($step < $maxStep) {
         $step ++;
     } else {
         $step = $maxStep;
     }
-    $app['session']->set('step', $step);
-    $content = file_get_contents($app['tutorial_dir']."step$step.md");
-    $tutorial = Markdown($content);
-    return $tutorial;
+    return renderStep($step, $app);
 });
 
 $app->get('/prev', function(Request $request) use($app) {
     $app['session']->start();
-    $step = $app['session']->get('step') ? : 0;
-    if ($step > 0) {
+    $step = $app['session']->get('step') ? : 1;
+    if ($step > 1) {
         $step --;
     } else {
-        $step = 0;
+        $step = 1;
     }
-    $app['session']->set('step', $step);
-    $content = file_get_contents($app['tutorial_dir']."step$step.md");
-    $tutorial = Markdown($content);
-    return $tutorial;
+    return renderStep($step, $app);
 });
 
 $app->get('/command', function(Request $request) use($app) {
-    $urlreq = $request->get('url');
+    $urlreq = trim($request->get('url'));
     if(strpos($urlreq, '/') !== 0) {
         $urlreq = '/'.$urlreq;
     }
@@ -65,10 +81,10 @@ $app->get('/command', function(Request $request) use($app) {
         return json_encode(array('error' => 'mapred not implemented in this interactive tutorial due to security risks, it is too powerful!'));
     }
 
-    $url = $app['host'].$urlreq;
-    $headers = array($request->get('header'));
-    $data = $request->get('data');
-    $method = $request->get('method');
+    $url = addNamespace($app, $app['host'].$urlreq);
+    $headers = array(trim($request->get('header')));
+    $data = trim($request->get('data'));
+    $method = strtoupper(trim($request->get('method')));
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_PORT, $app['port']);
@@ -108,7 +124,7 @@ $app->get('/command', function(Request $request) use($app) {
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_exec($ch);
 
-    return json_encode(array('response' => $retbody, 'header' => $rethead));
+    return json_encode(array('response' => unNamespace($app, $retbody), 'header' => unNamespace($app, $rethead)));
 });
 
 
